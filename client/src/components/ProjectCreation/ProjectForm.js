@@ -6,6 +6,8 @@ import ImageUploader from "./ImageUploader";
 import YearScroll from "./YearSelector";
 import RadioButton from "./RadioButton";
 import InputForm from "./InputForm";
+import TechStackSelector from "./TechStackSelector";
+import TechStackList from "./TechStackList";
 
 // 프로젝트 타입
 const projectTypeOptions = ["WEB", "APP", "GAME", "기타"];
@@ -92,6 +94,12 @@ const ProjectForm = ({ onSubmit }) => {
     teamMembers,
     thumbnail,
     images,
+    techStacks,
+    setTechStacks,
+    selectedTechStacks,
+    setSelectedTechStacks,
+    selectedTechStack,
+    setSelectedTechStack,
 
     inputTitle,
     inputContent,
@@ -109,6 +117,8 @@ const ProjectForm = ({ onSubmit }) => {
     addTeamMember,
     handleInputLimit,
     handleSubmit,
+
+    toggleTechStack,
   } = useProjectForm();
 
   return (
@@ -338,7 +348,9 @@ const ProjectForm = ({ onSubmit }) => {
         </button>
       </div>
 
-      {/* 기술 스택 추가 예정 */}
+      {/* 기술 스택 선택 */}
+      <TechStackSelector selectedTechStacks={selectedTechStacks} />
+      {/* <TechStackList /> */}
 
       {uploadError && <p className="error-message">{uploadError}</p>}
 

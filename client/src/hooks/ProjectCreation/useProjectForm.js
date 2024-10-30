@@ -28,6 +28,9 @@ const useProjectForm = () => {
   const [inputContent, setInputContent] = useState(0);
   const [inputSummary, setInputSummary] = useState(0);
 
+  // 기술 스택 선택 상태
+  const [selectedTechStacks, setSelectedTechStacks] = useState([]);
+
   // 업로드 관련 상태
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState(null);
@@ -103,6 +106,7 @@ const useProjectForm = () => {
     }
   };
 
+  // 입력 글자 수 제한 핸들러
   const handleInputLimit = (e) => {
     const { name, value } = e.target;
 
@@ -123,6 +127,17 @@ const useProjectForm = () => {
       default:
         break; // 아무것도 하지 않음
     }
+  };
+
+  // 기술 스택 선택 핸들러
+  const toggleTechStack = (techStackName) => {
+    setSelectedTechStacks((prevSelected) => {
+      if (prevSelected.includes(techStackName)) {
+        return prevSelected.filter((name) => name !== techStackName);
+      } else {
+        return [...prevSelected, techStackName];
+      }
+    });
   };
 
   // 유효성 검사 함수
@@ -240,6 +255,7 @@ const useProjectForm = () => {
     teamMembers,
     thumbnail,
     images,
+    selectedTechStacks,
 
     inputTitle,
     inputContent,
@@ -257,6 +273,7 @@ const useProjectForm = () => {
     addTeamMember,
     handleInputLimit,
     handleSubmit,
+    toggleTechStack,
   };
 };
 

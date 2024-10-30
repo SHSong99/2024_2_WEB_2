@@ -1,13 +1,13 @@
 .year-selector{
-  width: 342px;
+  width: 90%;
   height: 135px;
   padding-top: 15px;
   background-color: #2A2A2A;
   color: #7E7E7E;
   border-radius: 10px;
   margin: 0 auto; 
-  text-align: left;
-
+  text-align: center;
+  align-items: centers;
 }
 
 .year-label{
