@@ -4,7 +4,8 @@ import "./index.css";
 import TechStackList from "./components/ProjectCreation/TechStackList";
 import reportWebVitals from "./reportWebVitals";
 import TechStackSelector from "./components/ProjectCreation/TechStackSelector";
-import App from './App';
+import ProjectCreationPage from "./pages/ProjectCreation/ProjectCreationPage";
+import App from "./App";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
