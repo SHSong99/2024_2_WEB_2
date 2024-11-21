@@ -239,6 +239,7 @@ const ProjectForm = () => {
       <InputPin password={password} setPassword={setPassword} />
 
       {uploadError && <p className="error-message">{uploadError}</p>}
+
       <button
         type="submit"
         className={styles.submit_button}
