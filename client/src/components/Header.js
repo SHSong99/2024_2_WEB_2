@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import wapLogo from "../assets/img/WAP_white_NoBG.png";
 
-const Header = ({ toggleMenu }) => {
+const Header = ({ menuOpen,toggleMenu }) => {
   const [userName, setUserName] = useState(null);
   const navigate = useNavigate();
 
@@ -84,7 +84,7 @@ const Header = ({ toggleMenu }) => {
 
       {/* 메뉴 아이콘 */}
       <div className="menu-icon" onClick={toggleMenu}>
-        &#9776;
+        {menuOpen ? "✕" : "☰"} {/* 메뉴가 열려 있을 때 "✕" 표시, 닫혔을 때 "☰" 표시 */}
       </div>
     </header>
   );

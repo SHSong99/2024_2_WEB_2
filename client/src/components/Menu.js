@@ -11,60 +11,68 @@ const Menu = ({ menuOpen, toggleMenu }) => {
           <nav className="menu">
             <div>
               <ul>
+                <hr className='startLine'></hr>
                 <li
                   onClick={() => {
                     navigate("/login");
                     toggleMenu();
                   }}
                 >
-                  로그인
+                  Login
                 </li>
+                <hr className='line'></hr>
                 <li
                   onClick={() => {
                     navigate("/project");
                     toggleMenu();
                   }}
                 >
-                  프로젝트
+                  Projects
                 </li>
+                <hr className='line'></hr>
                 <li
                   onClick={() => {
                     navigate("/CreatePage");
                     toggleMenu();
                   }}
                 >
-                  프로젝트 생성
+                  Create Project
                 </li>
+                <hr className='line'></hr>
                 <li
                   onClick={() => {
                     navigate("/vote");
                     toggleMenu();
                   }}
                 >
-                  투표
+                  Vote
                 </li>
+                <hr className='line'></hr>
                 <li
                   onClick={() => {
                     navigate("/map");
                     toggleMenu();
                   }}
                 >
-                  위치도
+                  Map
                 </li>
+                <hr className='line'></hr>
                 <li
                   onClick={() => {
                     navigate("/MyPage");
                     toggleMenu();
                   }}
                 >
-                  마이페이지
+                  My page
                 </li>
+                <hr className='startLine'></hr>
               </ul>
             </div>
           </nav>
         )}
       </div>
     </>
+
   );
 };
 
