@@ -6,9 +6,7 @@ import Project from "./pages/menu/Project";
 import CreatePage from "./pages/menu/CreatePage";
 import Vote from "./pages/menu/Vote";
 import Map from "./pages/menu/Map";
-import MyPage from "./pages/menu/MyPage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
-import AppPage from "./pages/project/AppPage";
 import MainPage from "./pages/MainPage";
 import Callback from "./components/Login/Callback";
 import ProtectedPage from "./components/Login/ProtectedPage";
@@ -30,14 +28,11 @@ function App() {
           {/* 경로 */}
           <Route path="/project/create" element={<ProjectPage />} />
           <Route path="/vote" element={<VotePage />} />
-          <Route path="/MyPage" element={<MyPage />} />
           <Route path="/HomePage" element={<Home />} />
           <Route path="/project" element={<Project />} />
           <Route path="/map" element={<Map />} />
           <Route path="/project/:projectId" element={<ProjectDetailPage />} />
-          <Route path="/project/edit/:projectId" element={<ProjectPage />} />
-          {/* 수정 */}
-          <Route path="/app" element={<AppPage />} />
+
           {/* 보호된 페이지 */}
           <Route path="/protected" element={<ProtectedPage />} />
         </Routes>

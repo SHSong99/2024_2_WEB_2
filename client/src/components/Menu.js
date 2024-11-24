@@ -47,7 +47,7 @@ const Menu = ({
             <hr className="line"></hr>
             <li
               onClick={() => {
-                navigate("/project");
+                navigate("/HomePage");
                 toggleMenu();
               }}
             >
@@ -67,15 +67,6 @@ const Menu = ({
               }}
             >
               Map
-            </li>
-            <hr className="line"></hr>
-            <li
-              onClick={() => {
-                navigate("/MyPage");
-                toggleMenu();
-              }}
-            >
-              My page
             </li>
             <hr className="startLine"></hr>
           </ul>
