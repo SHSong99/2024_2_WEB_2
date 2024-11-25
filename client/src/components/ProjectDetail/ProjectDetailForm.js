@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode"; // JWT 디코딩 모듈
 import styles from "../../assets/ProjectDetail/ProjectDetailForm.module.css";
 import dogImage from "../../assets/img/dog.png";
-
+import EditButton from "./EditButton";
 
 const ProjectDetailForm = () => {
   const { projectId } = useParams();
@@ -14,7 +14,6 @@ const ProjectDetailForm = () => {
   const token = Cookies.get("authToken"); // 로그인한 사용자 토큰
   const [isOwner, setIsOwner] = useState(false); // 작성자인지 확인
   const [projectData, setProjectData] = useState(null); // 프로젝트 데이터
-
 
   const apiUrl = `${process.env.REACT_APP_API_BASE_URL_PROXY}/api/project/${projectId}`;
 
@@ -104,18 +103,18 @@ const ProjectDetailForm = () => {
             </div>
           </div>
         </div>
+
+        {/* 프로젝트 내용 */}
+        <div className={styles.project_detail_content}>
+          <div className={styles.summary}>
+            {projectData.summary || "요약 정보 없음"}
+          </div>
+          <div className={styles.content}>
+            {projectData.content || "내용이 없습니다."}
+          </div>
+        </div>
       </div>
 
-      {/* 프로젝트 내용 */}
-      <div className={styles.project_detail_content}>
-        <div className={styles.summary}>
-          {projectData.summary || "요약 정보 없음"}
-        </div>
-        <div className={styles.content}>
-          {projectData.content || "내용이 없습니다."}
-        </div>
-      </div>
-    
       {/* 이미지 섹션 */}
       <div className={styles.images}>
         {projectData.images && projectData.images.length > 0 ? (
@@ -138,13 +137,18 @@ const ProjectDetailForm = () => {
           <label>Team</label>
           <div className={styles.member}>
             {projectData.teamMember && projectData.teamMember.length > 0 ? (
-              projectData.teamMember.map((member, index) =>
-                member.memberName && member.memberRole ? ( // 이름과 역할이 있는 경우만 렌더링
-                  <div className={styles.memberInfo} key={index}>
-                    <div className={styles.memberName}>{member.memberName}</div>
-                    <div className={styles.memberRole}>{member.memberRole}</div>
-                  </div>
-                ) : null // 이름이나 역할이 없는 경우 렌더링하지 않음
+              projectData.teamMember.map(
+                (member, index) =>
+                  member.memberName && member.memberRole ? ( // 이름과 역할이 있는 경우만 렌더링
+                    <div className={styles.memberInfo} key={index}>
+                      <div className={styles.memberName}>
+                        {member.memberName}
+                      </div>
+                      <div className={styles.memberRole}>
+                        {member.memberRole}
+                      </div>
+                    </div>
+                  ) : null // 이름이나 역할이 없는 경우 렌더링하지 않음
               )
             ) : (
               <p>팀원 정보가 없습니다.</p>
@@ -174,7 +178,6 @@ const ProjectDetailForm = () => {
         </div>
       </div>
 
-
       {/* 삭제 버튼 */}
       {isOwner && token && (
         <button
@@ -194,6 +197,8 @@ const ProjectDetailForm = () => {
         </button>
       )}
 
+      {/* 수정 버튼 */}
+      <EditButton projectId={projectId} />
     </div>
   );
 };
