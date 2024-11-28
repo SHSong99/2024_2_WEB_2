@@ -6,6 +6,8 @@ import { jwtDecode } from "jwt-decode"; // JWT 디코딩 모듈
 import styles from "../../assets/ProjectDetail/ProjectDetailForm.module.css";
 import dogImage from "../../assets/img/dog.png";
 import EditButton from "./EditButton";
+import Comments from "./Comments/Comments";
+import CommentsList from "./Comments/CommentsList";
 
 const ProjectDetailForm = () => {
   const { projectId } = useParams();
@@ -200,8 +202,30 @@ const ProjectDetailForm = () => {
         )}
       </div>
 
-      {/* 수정 버튼 */}
-      {/* <EditButton projectId={projectId} /> */}
+      <div>
+        <hr
+          style={{
+            width: "100%",
+            margin: "30px 0",
+            border: "1px solid #363636",
+          }}
+        />
+        <Comments projectId={projectId} />
+        {projectData.comments && projectData.comments.length > 0 && (
+          <>
+            <hr
+              style={{
+                width: "90%",
+                margin: "0 auto",
+                marginBottom: "20px",
+                border: "1px solid #363636",
+              }}
+            />
+            <CommentsList comments={projectData.comments} />
+          </>
+        )}
+      </div>
+      <div className={styles.footer}></div>
     </div>
   );
 };
