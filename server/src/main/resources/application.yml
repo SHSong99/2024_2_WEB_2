@@ -2,11 +2,14 @@ spring:
   application:
     name: server
 
-  profiles:
-    include:
-      - db
-      - oauth
-      - s3
+  config:
+    import: optional:file:.env[.yml]
+
+  datasource:
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?createDatabaseIfNotExist=true
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
@@ -20,3 +23,47 @@ spring:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
+
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: ${KAKAO_REST_API_KEY}
+            client-secret: 1aad561b8ca76979450e2a05adaf8b35
+            scope: profile_nickname,profile_image,account_email
+            client-name: kakao-login
+            authorization-grant-type: authorization_code
+            redirect-uri: ${SERVER_URL}/oauth2/callback/kakao
+            client-authentication-method: POST
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+
+app:
+  auth:
+    tokenSecret: ${JWT_SECKET_KEY}
+    tokenExpirationMsec: 86400000
+  #  cors:
+  #    allowedOrigins:
+  #      - https://wap-projects.netlify.app
+  #      - http://localhost:3000
+  #      - http://localhost:8080
+  oauth2:
+    authorizedRedirectUris:
+      - https://wap-projects.netlify.app/oauth2/redirect
+      - http://localhost:3000/oauth2/redirect
+      - myandroidapp://oauth2/redirect
+      - myiosapp://oauth2/redirect
+aws:
+  accessKeyId: ${AWS_KEY_ID}
+  secretKey: ${AWS_SECRET_KEY}
+  s3:
+    bucketName: ${AWS_S3_BUCKET_NAME}
+    region: ${AWS_REGION}
+
+project:
+  password: 1248
