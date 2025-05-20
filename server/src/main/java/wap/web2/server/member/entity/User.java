@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
+import wap.web2.server.comment.entity.Comment;
 import wap.web2.server.project.entity.Project;
-
 
 @Entity
 @Getter
@@ -58,6 +58,9 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Project> projects = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Comment> comments = new ArrayList<>();
 
     public Boolean canVote() {
         return !this.voted;

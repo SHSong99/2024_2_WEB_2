@@ -8,6 +8,8 @@ import wap.web2.server.comment.dto.request.CommentCreateRequest;
 import wap.web2.server.comment.dto.request.CommentDeleteRequest;
 import wap.web2.server.comment.entity.Comment;
 import wap.web2.server.comment.repository.CommentRepository;
+import wap.web2.server.member.entity.User;
+import wap.web2.server.member.repository.UserRepository;
 import wap.web2.server.ouath2.security.UserPrincipal;
 import wap.web2.server.project.entity.Project;
 import wap.web2.server.project.repository.ProjectRepository;
@@ -18,15 +20,16 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
     private final ProjectRepository projectRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public void save(Long projectId, CommentCreateRequest request, UserPrincipal userPrincipal) {
         Project project = projectRepository.findById(projectId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 프로젝트"));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] Project not found"));
+        User user = userRepository.findById(userPrincipal.getId())
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] User not found"));
 
-        Comment comment = request.toEntity(project);
-
-        commentRepository.save(comment);
+        commentRepository.save(request.toEntity(project, user));
     }
 
     @Transactional
