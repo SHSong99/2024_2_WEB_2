@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 import { navigate } from "react-router-dom";
 import styles from "../../../assets/ProjectDetail/Comments/Comments.module.css";
 import userImage from "../../../assets/img/WAP_white_NoBG.png";
@@ -11,19 +12,19 @@ const Comments = ({ projectId }) => {
   const textAreaRef = useRef(null); // textarea DOM 참조
 
   // 닉네임
-  const [userName, setUserName] = useState("");
+  // const [userName, setUserName] = useState("");
   // 비밀번호
-  const [password, setPassword] = useState("");
+  // const [password, setPassword] = useState("");
 
   // 닉네임 핸들러
-  const handleUserNameChange = (e) => {
-    setUserName(e.target.value);
-  };
+  // const handleUserNameChange = (e) => {
+  //   setUserName(e.target.value);
+  // };
 
   // 비밀번호 핸들러
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
+  // const handlePasswordChange = (e) => {
+  //   setPassword(e.target.value);
+  // };
 
   const handleCommentsChange = (e) => {
     setComments(e.target.value);
@@ -40,29 +41,32 @@ const Comments = ({ projectId }) => {
 
   const resetForm = () => {
     setComments("");
-    setUserName("");
-    setPassword("");
+    // setUserName("");
+    // setPassword("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!password) {
-      alert("비밀번호를 입력해 주세요.");
-      return;
-    }
+    // if (!password) {
+    //   alert("비밀번호를 입력해 주세요.");
+    //   return;
+    // }
     const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/comment/${projectId}`;
 
     const commentsData = {
       commentContent: comments,
-      commenter: userName,
-      password,
+      // commenter: userName,
+      // password,
     };
 
     try {
+      const token = Cookies.get("authToken"); // ✅ 정확히 같은 이름으로!
+
       await axios.post(apiUrl, commentsData, {
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
       alert("댓글이 작성되었습니다.");
@@ -70,8 +74,8 @@ const Comments = ({ projectId }) => {
       resetForm();
       window.location.reload();
     } catch (error) {
-      // console.error("댓글 작성 실패:", error);
-      alert("댓글 작성에 실패했습니다. 다시 시도해주세요.");
+      //console.error("댓글 작성 실패:", error);
+      alert("댓글은 로그인 후에 작성 가능합니다. ");
     }
   };
 
@@ -113,7 +117,7 @@ const Comments = ({ projectId }) => {
             </svg> */}
             <img className={styles.user_image} alt="user" src={userImage} />
           </div>
-          <div className={styles.nickname}>
+          {/* <div className={styles.nickname}>
             <textarea
               className={styles.nickname_input}
               rows={1} // 최소 줄 수
@@ -122,8 +126,8 @@ const Comments = ({ projectId }) => {
               spellCheck={false} // 스펠링 체크 끄기
               onChange={handleUserNameChange}
             />
-          </div>
-          <div className={styles.password}>
+          </div> */}
+          {/* <div className={styles.password}>
             <textarea
               className={styles.password_input}
               rows={1} // 최소 줄 수
@@ -132,7 +136,7 @@ const Comments = ({ projectId }) => {
               spellCheck={false} // 스펠링 체크 끄기
               onChange={handlePasswordChange}
             />
-          </div>
+          </div> */}
         </div>
         <div className={styles.comments_form}>
           <div className={styles.comments_input_form}>
