@@ -6,11 +6,11 @@ const Menu = ({
   menuOpen,
   toggleMenu,
   userName,
-  handleLogin,
-  handleLogout,
 }) => {
   const navigate = useNavigate();
+
   const [canNavigate, setCanNavigate] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!Cookies.get("authToken")); // ✅ 초기값 설정
 
   const handleNavigationWithAuth = (path) => {
     const token = Cookies.get("authToken");
@@ -24,16 +24,18 @@ const Menu = ({
   };
 
   useEffect(() => {
-    // 특정 시간을 설정 (2024년 11월 29일 오후 6시)
+    // 로그인 상태 확인 (초기 mount 시)
+    const token = Cookies.get("authToken");
+    setIsLoggedIn(!!token);
+
+    // 특정 날짜 이후 접근 허용
     const allowedDate = new Date("2024-11-29T18:00:00");
     const now = new Date();
 
     if (now >= allowedDate) {
-      setCanNavigate(true); // 조건 만족 시 이동 가능
+      setCanNavigate(true);
     } else {
       const timeUntilAllowed = allowedDate - now;
-
-      // 특정 시간 이후에 상태를 변경
       setTimeout(() => {
         setCanNavigate(true);
       }, timeUntilAllowed);
@@ -42,10 +44,19 @@ const Menu = ({
 
   const handleVotePageNavigate = () => {
     if (canNavigate) {
-      handleNavigationWithAuth("/vote"); // 이동할 페이지 경로
+      handleNavigationWithAuth("/vote");
     } else {
       alert("투표는 2024년 11월 29일 오후 6시부터 가능합니다.");
     }
+  };
+
+  const handleLogout = () => {
+    Cookies.remove("authToken");
+    Cookies.remove("userName");
+    setIsLoggedIn(false); // ✅ 상태 수동 갱신
+    alert("로그아웃 되었습니다.");
+    toggleMenu();
+    navigate("/");
   };
 
   return (
@@ -53,7 +64,7 @@ const Menu = ({
       {menuOpen && (
         <nav className="menu">
           <div className="menu-header">
-            {userName ? (
+            {isLoggedIn && userName ? (
               <p className="welcome-message">{userName}님 환영합니다!</p>
             ) : (
               <p></p>
@@ -61,16 +72,20 @@ const Menu = ({
           </div>
 
           <ul>
-            <hr className="startLine"></hr>
+            <hr className="startLine" />
             <li
               onClick={() => {
-                navigate("/login");
-                toggleMenu();
+                if (isLoggedIn) {
+                  handleLogout();
+                } else {
+                  toggleMenu();
+                  navigate("/login");
+                }
               }}
             >
-              Login
+              {isLoggedIn ? "Logout" : "Login"}
             </li>
-            <hr className="line"></hr>
+            <hr className="line" />
             <li
               onClick={() => {
                 navigate("/HomePage");
@@ -79,12 +94,12 @@ const Menu = ({
             >
               Projects
             </li>
-            <hr className="line"></hr>
+            <hr className="line" />
             <li onClick={() => handleNavigationWithAuth("/project/create")}>
               Create Project
             </li>
             <hr className="line"></hr>
-            <li onClick={() => handleVotePageNavigate("/vote")}>Vote</li>
+            <li onClick={handleVotePageNavigate}>Vote</li>
             {/*<hr className="line"></hr>
             <li
               onClick={() => {
@@ -95,6 +110,7 @@ const Menu = ({
               Map
             </li>*/}
             <hr className="startLine"></hr>
+
           </ul>
         </nav>
       )}
