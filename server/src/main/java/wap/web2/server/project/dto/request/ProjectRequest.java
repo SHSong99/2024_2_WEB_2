@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 import wap.web2.server.member.entity.User;
 import wap.web2.server.project.dto.ImageDto;
@@ -22,6 +23,7 @@ import wap.web2.server.vote.entity.Vote;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class ProjectRequest {
 
     private String title;
